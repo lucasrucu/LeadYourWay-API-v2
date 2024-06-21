@@ -8,6 +8,7 @@ import com.lyw.api.app.core.bicycle.domain.queries.GetBicycleByIdQuery;
 import com.lyw.api.app.core.bicycle.domain.queries.GetBicyclesQuery;
 
 public interface BicycleQueryService {
+
     Bicycle handle(GetBicycleByIdQuery query);
 
     List<Bicycle> handle(GetBicyclesQuery query);

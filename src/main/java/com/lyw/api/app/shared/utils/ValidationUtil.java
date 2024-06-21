@@ -8,6 +8,8 @@ import com.lyw.api.app.core.bicycle.domain.repositories.AvailabilityRepository;
 import com.lyw.api.app.core.bicycle.domain.repositories.BicycleRepository;
 import com.lyw.api.app.core.card.domain.model.Card;
 import com.lyw.api.app.core.card.domain.repositories.CardRepository;
+import com.lyw.api.app.core.rent.domain.model.Rent;
+import com.lyw.api.app.core.rent.domain.repositories.RentRepository;
 import com.lyw.api.app.iam.identity.domain.model.Role;
 import com.lyw.api.app.iam.identity.domain.model.User;
 import com.lyw.api.app.iam.identity.domain.repositories.RoleRepository;
@@ -25,18 +27,21 @@ public class ValidationUtil {
     private final CardRepository cardRepository;
     private final BicycleRepository bicycleRepository;
     private final AvailabilityRepository availabilityRepository;
+    private final RentRepository rentRepository;
 
     public ValidationUtil(
             UserRepository userRepository,
             RoleRepository roleRepository,
             CardRepository cardRepository,
             BicycleRepository bicycleRepository,
-            AvailabilityRepository availabilityRepository) {
+            AvailabilityRepository availabilityRepository,
+            RentRepository rentRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.cardRepository = cardRepository;
         this.bicycleRepository = bicycleRepository;
         this.availabilityRepository = availabilityRepository;
+        this.rentRepository = rentRepository;
     }
 
     public User findUserById(String id) {
@@ -67,6 +72,11 @@ public class ValidationUtil {
     public Availability findAvailabilityById(Long id) {
         return availabilityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Availability not found with id: " + id));
+    }
+
+    public Rent findRentById(Long id) {
+        return rentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Rent not found with id: " + id));
     }
 
 }
