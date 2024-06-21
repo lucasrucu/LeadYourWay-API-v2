@@ -47,4 +47,8 @@ public class Card extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public boolean getCardMain() {
+        return cardMain;
+    }
 }

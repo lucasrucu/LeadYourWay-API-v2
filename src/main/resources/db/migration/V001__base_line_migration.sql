@@ -56,6 +56,20 @@ CREATE TABLE availabilities (
     bicycle_id BIGINT,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE rents (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    created_date DATETIME(6) NOT NULL,
+    deleted BIT,
+    updated_date DATETIME(6),
+    rent_end_date DATE NOT NULL,
+    rent_price FLOAT(53) NOT NULL,
+    rent_start_date DATE NOT NULL,
+    bicycle_id BIGINT,
+    card_id BIGINT,
+    PRIMARY KEY (id)
+);
+
     
 ALTER TABLE users
     ADD CONSTRAINT fk_users_roles FOREIGN KEY (role_id) REFERENCES roles(id);
@@ -68,3 +82,9 @@ ALTER TABLE bicycles
 
 ALTER TABLE availabilities
     ADD CONSTRAINT fk_availabilities_bicycles FOREIGN KEY (bicycle_id) REFERENCES bicycles(id);
+
+ALTER TABLE rents
+    ADD CONSTRAINT fk_rents_bicycles FOREIGN KEY (bicycle_id) REFERENCES bicycles (id);
+
+ALTER TABLE rents
+    ADD CONSTRAINT fk_rents_cards FOREIGN KEY (card_id) REFERENCES cards (id);

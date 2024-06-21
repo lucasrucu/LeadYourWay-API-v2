@@ -38,7 +38,8 @@ public class RentCommandServiceImpl implements RentCommandService {
 
     private void makePayment(CreateRentCommand command, Rent rent) {
         Long lesseeCardId = command.rentRequestDto().getCardId();
-        Long lessorCardId = userQueryService.handle(new GetUserMainCard(rent.getBicycle().getUser().getId())).getId();
+        Long lessorCardId = userQueryService.handle(new GetUserMainCard(rent.getBicycle().getUser().getId(), true))
+                .getId();
 
         double paymentAmount = command.rentRequestDto().getRentPrice();
 
