@@ -1,6 +1,6 @@
 package com.lyw.api.app.core.bicycle.domain.queries;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public record GetAvailableBicyclesQuery(Date startDate, Date endDate) {
+public record GetAvailableBicyclesQuery(LocalDate startDate, LocalDate endDate) {
 }

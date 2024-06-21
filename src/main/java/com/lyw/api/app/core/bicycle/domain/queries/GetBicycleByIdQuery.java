@@ -1,4 +1,4 @@
 package com.lyw.api.app.core.bicycle.domain.queries;
 
-public record GetAllBicyclesQuery() {
+public record GetBicycleByIdQuery(Long bicycleId) {
 }
