@@ -25,7 +25,7 @@ public class CardCommandServiceImpl implements CardCommandService {
     @Override
     public Card handle(CreateCardCommand command) {
         Card card = new Card();
-        card = setCard(card, command.card());
+        card = setCard(card, command.cardRequestDto());
         card.setUser(validationUtil.findUserById(command.userId()));
         return cardRepository.save(card);
     }
@@ -33,7 +33,7 @@ public class CardCommandServiceImpl implements CardCommandService {
     @Override
     public Card handle(UpdateCardCommand command) {
         Card card = validationUtil.findCardById(command.cardId());
-        card = setCard(card, command.card());
+        card = setCard(card, command.cardRequestDto());
         return cardRepository.save(card);
     }
 
