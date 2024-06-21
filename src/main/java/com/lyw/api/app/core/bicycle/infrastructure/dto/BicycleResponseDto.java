@@ -20,4 +20,6 @@ public class BicycleResponseDto {
     private String bicycleModel;
     @Schema(description = "Image Data")
     private String imageData;
+    @Schema(description = "Temperature")
+    private double temperature;
 }
