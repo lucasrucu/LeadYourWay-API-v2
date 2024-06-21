@@ -5,11 +5,14 @@ import org.springframework.stereotype.Service;
 import com.lyw.api.app.core.card.application.services.CardCommandService;
 import com.lyw.api.app.core.card.domain.commands.CreateCardCommand;
 import com.lyw.api.app.core.card.domain.commands.DeleteCardCommand;
+import com.lyw.api.app.core.card.domain.commands.UpdateCardAmountCommand;
 import com.lyw.api.app.core.card.domain.commands.UpdateCardCommand;
 import com.lyw.api.app.core.card.domain.model.Card;
 import com.lyw.api.app.core.card.domain.repositories.CardRepository;
 import com.lyw.api.app.core.card.infrastructure.dto.CardRequestDto;
 import com.lyw.api.app.shared.utils.ValidationUtil;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class CardCommandServiceImpl implements CardCommandService {
@@ -25,7 +28,7 @@ public class CardCommandServiceImpl implements CardCommandService {
     @Override
     public Card handle(CreateCardCommand command) {
         Card card = new Card();
-        card = setCard(card, command.card());
+        card = setCard(card, command.cardRequestDto());
         card.setUser(validationUtil.findUserById(command.userId()));
         return cardRepository.save(card);
     }
@@ -33,7 +36,7 @@ public class CardCommandServiceImpl implements CardCommandService {
     @Override
     public Card handle(UpdateCardCommand command) {
         Card card = validationUtil.findCardById(command.cardId());
-        card = setCard(card, command.card());
+        card = setCard(card, command.cardRequestDto());
         return cardRepository.save(card);
     }
 
@@ -41,6 +44,14 @@ public class CardCommandServiceImpl implements CardCommandService {
     public void handle(DeleteCardCommand command) {
         Card card = validationUtil.findCardById(command.cardId());
         cardRepository.delete(card);
+    }
+
+    @Override
+    @Transactional
+    public void handle(UpdateCardAmountCommand command) {
+        Card card = validationUtil.findCardById(command.cardId());
+        card.setCardAmount(card.getCardAmount() + command.amount());
+        cardRepository.save(card);
     }
 
     private Card setCard(Card card, CardRequestDto cardDto) {

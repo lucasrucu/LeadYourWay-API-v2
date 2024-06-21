@@ -6,7 +6,7 @@ import com.lyw.api.app.shared.model.AuditModel;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -33,7 +33,7 @@ public class Card extends AuditModel {
     private String cardCvv;
 
     @Column(name = "card_expiration_date", nullable = false)
-    private Date cardExpirationDate;
+    private LocalDate cardExpirationDate;
 
     @Column(name = "card_amount", nullable = false)
     private Double cardAmount;
@@ -47,4 +47,8 @@ public class Card extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public boolean getCardMain() {
+        return cardMain;
+    }
 }

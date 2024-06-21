@@ -6,8 +6,12 @@ import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.lyw.api.app.core.bicycle.domain.model.Bicycle;
+import com.lyw.api.app.core.card.domain.model.Card;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -41,6 +45,12 @@ public class User implements Serializable {
 
     @Column(name = "deleted")
     private Boolean deleted;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bicycle> bicycles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Card> cards;
 
     @PrePersist
     private void prePersist() {
