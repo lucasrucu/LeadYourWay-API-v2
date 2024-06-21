@@ -45,6 +45,17 @@ CREATE TABLE bicycles (
     user_id VARCHAR(255),
     PRIMARY KEY (id)
 );
+
+CREATE TABLE availabilities (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    created_date DATETIME(6) NOT NULL,
+    deleted BIT,
+    updated_date DATETIME(6),
+    availability_end_date DATE NOT NULL,
+    availability_start_date DATE NOT NULL,
+    bicycle_id BIGINT,
+    PRIMARY KEY (id)
+);
     
 ALTER TABLE users
     ADD CONSTRAINT fk_users_roles FOREIGN KEY (role_id) REFERENCES roles(id);
@@ -54,3 +65,6 @@ ALTER TABLE cards
 
 ALTER TABLE bicycles
     ADD CONSTRAINT fk_bicycles_users FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE availabilities
+    ADD CONSTRAINT fk_availabilities_bicycles FOREIGN KEY (bicycle_id) REFERENCES bicycles(id);
