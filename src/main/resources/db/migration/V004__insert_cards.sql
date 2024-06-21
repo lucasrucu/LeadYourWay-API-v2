@@ -1,4 +1,3 @@
--- Insert cards for the first user (id = 'j4iAW6Ko0oghRBWAquQGE4b33Cs1')
 INSERT INTO cards (created_date, deleted, card_amount, card_cvv, card_expiration_date, card_holder, card_main, card_number, card_type, user_id)
 VALUES
     ('2024-06-21 10:00:00', 0, 1000.0, '123', '2026-06-01 00:00:00', 'Biker', 1, '1234567890123456', 'Visa', 'j4iAW6Ko0oghRBWAquQGE4b33Cs1'),
