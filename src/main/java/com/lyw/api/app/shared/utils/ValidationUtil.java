@@ -2,8 +2,14 @@ package com.lyw.api.app.shared.utils;
 
 import org.springframework.stereotype.Component;
 
+import com.lyw.api.app.core.bicycle.domain.model.Availability;
+import com.lyw.api.app.core.bicycle.domain.model.Bicycle;
+import com.lyw.api.app.core.bicycle.domain.repositories.AvailabilityRepository;
+import com.lyw.api.app.core.bicycle.domain.repositories.BicycleRepository;
 import com.lyw.api.app.core.card.domain.model.Card;
 import com.lyw.api.app.core.card.domain.repositories.CardRepository;
+import com.lyw.api.app.core.rent.domain.model.Rent;
+import com.lyw.api.app.core.rent.domain.repositories.RentRepository;
 import com.lyw.api.app.iam.identity.domain.model.Role;
 import com.lyw.api.app.iam.identity.domain.model.User;
 import com.lyw.api.app.iam.identity.domain.repositories.RoleRepository;
@@ -19,42 +25,23 @@ public class ValidationUtil {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final CardRepository cardRepository;
-    // private final AgencyRepository agencyRepository;
-    // private final TouristRepository touristRepository;
-    // private final ActivityRepository activityRepository;
-    // private final DepartmentRepository departmentRepository;
-    // private final DestinationRepository destinationRepository;
-    // private final RegionRepository regionRepository;
-    // private final ScheduleRepository scheduleRepository;
-    // private final TourPackageRepository tourPackageRepository;
-    // private final VehicleRepository vehicleRepository;
+    private final BicycleRepository bicycleRepository;
+    private final AvailabilityRepository availabilityRepository;
+    private final RentRepository rentRepository;
 
     public ValidationUtil(
             UserRepository userRepository,
             RoleRepository roleRepository,
-            CardRepository cardRepository
-    // AgencyRepository agencyRepository,
-    // TouristRepository touristRepository,
-    // ActivityRepository activityRepository,
-    // DepartmentRepository departmentRepository,
-    // DestinationRepository destinationRepository,
-    // RegionRepository regionRepository,
-    // ScheduleRepository scheduleRepository,
-    // TourPackageRepository tourPackageRepository,
-    // VehicleRepository vehicleRepository,
-    ) {
+            CardRepository cardRepository,
+            BicycleRepository bicycleRepository,
+            AvailabilityRepository availabilityRepository,
+            RentRepository rentRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.cardRepository = cardRepository;
-        // this.agencyRepository = agencyRepository;
-        // this.touristRepository = touristRepository;
-        // this.activityRepository = activityRepository;
-        // this.departmentRepository = departmentRepository;
-        // this.destinationRepository = destinationRepository;
-        // this.regionRepository = regionRepository;
-        // this.scheduleRepository = scheduleRepository;
-        // this.tourPackageRepository = tourPackageRepository;
-        // this.vehicleRepository = vehicleRepository;
+        this.bicycleRepository = bicycleRepository;
+        this.availabilityRepository = availabilityRepository;
+        this.rentRepository = rentRepository;
     }
 
     public User findUserById(String id) {
@@ -77,74 +64,19 @@ public class ValidationUtil {
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found with id: " + id));
     }
 
-    // public Vehicle findVehicleById(Long id) {
-    // return vehicleRepository.findById(id)
-    // .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with id:
-    // " + id));
-    // }
+    public Bicycle findBicycleById(Long id) {
+        return bicycleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Bicycle not found with id: " + id));
+    }
 
-    // public Agency findAgencyById(Long id) {
-    // return agencyRepository.findById(id)
-    // .orElseThrow(() -> new ResourceNotFoundException("Agency not found with id: "
-    // + id));
-    // }
+    public Availability findAvailabilityById(Long id) {
+        return availabilityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Availability not found with id: " + id));
+    }
 
-    // public Tourist findTouristById(Long id) {
-    // return touristRepository.findById(id)
-    // .orElseThrow(() -> new ResourceNotFoundException("Tourist not found with id:
-    // " + id));
-    // }
-
-    // public Agency findAgencyByUserId(String id) {
-    // return agencyRepository.findByUserId(id)
-    // .orElseThrow(() -> new ResourceNotFoundException("Agency not found with user
-    // id: " + id));
-    // }
-
-    // public Tourist findTouristByUserId(String id) {
-    // return touristRepository.findByUserId(id)
-    // .orElseThrow(() -> new ResourceNotFoundException("Tourist not found with user
-    // id: " + id));
-    // }
-
-    // public Activity findActivityById(Long id) {
-    // return activityRepository.findById(id)
-    // .orElseThrow(() -> new ResourceNotFoundException("Activity not found with id:
-    // " + id));
-    // }
-
-    // public Department findDepartmentById(Long id) {
-    // return departmentRepository.findById(id)
-    // .orElseThrow(() -> new ResourceNotFoundException("Department not found with
-    // id: " + id));
-    // }
-
-    // public Department findDepartmentByName(String name) {
-    // return departmentRepository.findByName(name)
-    // .orElseThrow(() -> new ResourceNotFoundException("Department not found with
-    // name: " + name));
-    // }
-
-    // public Destination findDestinationById(Long id) {
-    // return destinationRepository.findById(id).orElse(new Destination());
-    // }
-
-    // public Region findRegionById(Long id) {
-    // return regionRepository.findById(id)
-    // .orElseThrow(() -> new ResourceNotFoundException("Region not found with id: "
-    // + id));
-    // }
-
-    // public Schedule findTourExperienceById(Long id) {
-    // return scheduleRepository.findById(id)
-    // .orElseThrow(() -> new ResourceNotFoundException("TourExperience not found
-    // with id: " + id));
-    // }
-
-    // public TourPackage findTourPackageById(Long id) {
-    // return tourPackageRepository.findById(id)
-    // .orElseThrow(() -> new ResourceNotFoundException("TourPackage not found with
-    // id: " + id));
-    // }
+    public Rent findRentById(Long id) {
+        return rentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Rent not found with id: " + id));
+    }
 
 }

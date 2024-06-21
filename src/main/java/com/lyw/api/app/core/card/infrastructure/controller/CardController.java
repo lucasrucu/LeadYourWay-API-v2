@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/leadyourway/v1/cards")
-@Tag(name = "Card", description = "Card API")
+@Tag(name = "Card Controller", description = "Card API")
 @CrossOrigin(origins = "*")
 public class CardController {
 
@@ -80,8 +80,8 @@ public class CardController {
     @Transactional
     @DeleteMapping("/{cardId}")
     @Operation(summary = "Delete a card")
-    public ResponseEntity<Void> deleteCard(@PathVariable(name = "cardId") Long cardId) {
+    public ResponseEntity<String> deleteCard(@PathVariable(name = "cardId") Long cardId) {
         cardCommandService.handle(new DeleteCardCommand(cardId));
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Card deleted successfully");
     }
 }
