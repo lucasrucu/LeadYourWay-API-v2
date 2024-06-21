@@ -34,7 +34,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/leadyourway/v1/bicycles")
-@Tag(name = "Bicycles", description = "Bicycles API")
+@Tag(name = "Bicycle Controller", description = "Bicycles API")
 @CrossOrigin(origins = "*")
 public class BikeController {
 
