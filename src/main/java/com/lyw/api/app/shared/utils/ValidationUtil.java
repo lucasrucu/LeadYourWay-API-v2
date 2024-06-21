@@ -2,7 +2,9 @@ package com.lyw.api.app.shared.utils;
 
 import org.springframework.stereotype.Component;
 
+import com.lyw.api.app.core.bicycle.domain.model.Availability;
 import com.lyw.api.app.core.bicycle.domain.model.Bicycle;
+import com.lyw.api.app.core.bicycle.domain.repositories.AvailabilityRepository;
 import com.lyw.api.app.core.bicycle.domain.repositories.BicycleRepository;
 import com.lyw.api.app.core.card.domain.model.Card;
 import com.lyw.api.app.core.card.domain.repositories.CardRepository;
@@ -22,16 +24,19 @@ public class ValidationUtil {
     private final RoleRepository roleRepository;
     private final CardRepository cardRepository;
     private final BicycleRepository bicycleRepository;
+    private final AvailabilityRepository availabilityRepository;
 
     public ValidationUtil(
             UserRepository userRepository,
             RoleRepository roleRepository,
             CardRepository cardRepository,
-            BicycleRepository bicycleRepository) {
+            BicycleRepository bicycleRepository,
+            AvailabilityRepository availabilityRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.cardRepository = cardRepository;
         this.bicycleRepository = bicycleRepository;
+        this.availabilityRepository = availabilityRepository;
     }
 
     public User findUserById(String id) {
@@ -57,6 +62,11 @@ public class ValidationUtil {
     public Bicycle findBicycleById(Long id) {
         return bicycleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Bicycle not found with id: " + id));
+    }
+
+    public Availability findAvailabilityById(Long id) {
+        return availabilityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Availability not found with id: " + id));
     }
 
 }

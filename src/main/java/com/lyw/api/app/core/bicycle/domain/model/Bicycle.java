@@ -6,8 +6,6 @@ import com.lyw.api.app.shared.model.AuditModel;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter

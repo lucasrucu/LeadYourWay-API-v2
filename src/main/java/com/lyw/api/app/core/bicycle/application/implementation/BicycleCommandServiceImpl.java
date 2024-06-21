@@ -12,12 +12,12 @@ import com.lyw.api.app.core.bicycle.infrastructure.dto.BicycleRequestDto;
 import com.lyw.api.app.shared.utils.ValidationUtil;
 
 @Service
-public class BicycleCommanServiceImpl implements BicycleCommandService {
+public class BicycleCommandServiceImpl implements BicycleCommandService {
 
     private final BicycleRepository bicycleRepository;
     private final ValidationUtil validationUtil;
 
-    public BicycleCommanServiceImpl(BicycleRepository bicycleRepository, ValidationUtil validationUtil) {
+    public BicycleCommandServiceImpl(BicycleRepository bicycleRepository, ValidationUtil validationUtil) {
         this.bicycleRepository = bicycleRepository;
         this.validationUtil = validationUtil;
     }
