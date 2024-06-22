@@ -1,5 +1,7 @@
 package com.lyw.api.app.shared.utils;
 
+import com.lyw.api.app.assets.domain.model.Velocity;
+import com.lyw.api.app.assets.domain.repositories.VelocityRepository;
 import org.springframework.stereotype.Component;
 
 import com.lyw.api.app.assets.domain.model.Temperature;
@@ -31,6 +33,7 @@ public class ValidationUtil {
     private final AvailabilityRepository availabilityRepository;
     private final RentRepository rentRepository;
     private final TemperatureRepository temperatureRepository;
+    private final VelocityRepository velocityRepository;
 
     public ValidationUtil(
             UserRepository userRepository,
@@ -39,7 +42,7 @@ public class ValidationUtil {
             BicycleRepository bicycleRepository,
             AvailabilityRepository availabilityRepository,
             RentRepository rentRepository,
-            TemperatureRepository temperatureRepository) {
+            TemperatureRepository temperatureRepository, VelocityRepository velocityRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.cardRepository = cardRepository;
@@ -47,6 +50,7 @@ public class ValidationUtil {
         this.availabilityRepository = availabilityRepository;
         this.rentRepository = rentRepository;
         this.temperatureRepository = temperatureRepository;
+        this.velocityRepository = velocityRepository;
     }
 
     public User findUserById(String id) {
@@ -87,6 +91,11 @@ public class ValidationUtil {
     public Temperature findTemperatureById(Long id) {
         return temperatureRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Temperature not found with id: " + id));
+    }
+
+    public Velocity findVelocityById(Long id){
+        return velocityRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Velocity not found with id: " + id));
     }
 
 }
