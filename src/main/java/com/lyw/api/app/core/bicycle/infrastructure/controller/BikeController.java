@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lyw.api.app.assets.infrastructure.dto.TemperatureRequestDto;
 import com.lyw.api.app.core.bicycle.application.services.BicycleCommandService;
 import com.lyw.api.app.core.bicycle.application.services.BicycleQueryService;
 import com.lyw.api.app.core.bicycle.domain.commands.CreateBicycleCommand;
 import com.lyw.api.app.core.bicycle.domain.commands.DeleteBicycleCommand;
+import com.lyw.api.app.core.bicycle.domain.commands.PatchBicycleTemperatureCommand;
 import com.lyw.api.app.core.bicycle.domain.commands.UpdateBicycleCommand;
 import com.lyw.api.app.core.bicycle.domain.queries.GetAvailableBicyclesQuery;
 import com.lyw.api.app.core.bicycle.domain.queries.GetBicycleByIdQuery;
@@ -35,7 +37,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api/leadyourway/v1/bicycles")
 @Tag(name = "Bicycle Controller", description = "Bicycles API")
-@CrossOrigin(origins = "*")
+@CrossOrigin
 public class BikeController {
 
     private final BicycleQueryService bicycleQueryService;
@@ -99,5 +101,14 @@ public class BikeController {
     public ResponseEntity<String> deleteBicycle(@PathVariable(name = "bicycleId") Long bicycleId) {
         bicycleCommandService.handle(new DeleteBicycleCommand(bicycleId));
         return ResponseEntity.ok("Bicycle deleted successfully");
+    }
+
+    @Transactional
+    @PutMapping("/temperature/{bicycleId}")
+    @Operation(summary = "Update a bicycle temperature")
+    public ResponseEntity<String> updateBicycleTemperature(@PathVariable(name = "bicycleId") Long bicycleId,
+            @RequestBody TemperatureRequestDto temperatureRequestDto) {
+        bicycleCommandService.handle(new PatchBicycleTemperatureCommand(temperatureRequestDto));
+        return ResponseEntity.ok("Bicycle temperature updated successfully");
     }
 }

@@ -31,6 +31,15 @@ CREATE TABLE cards (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE temperatures (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    created_date DATETIME(6) NOT NULL,
+    deleted BIT,
+    updated_date DATETIME(6),
+    temperature float(53) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE bicycles (
     id BIGINT NOT NULL AUTO_INCREMENT,
     created_date DATETIME(6) NOT NULL,
@@ -43,6 +52,7 @@ CREATE TABLE bicycles (
     bicycle_size VARCHAR(255) NOT NULL,
     image_data VARCHAR(255),
     user_id VARCHAR(255),
+    temperature_id BIGINT,
     PRIMARY KEY (id)
 );
 
@@ -69,7 +79,6 @@ CREATE TABLE rents (
     card_id BIGINT,
     PRIMARY KEY (id)
 );
-
     
 ALTER TABLE users
     ADD CONSTRAINT fk_users_roles FOREIGN KEY (role_id) REFERENCES roles(id);
@@ -79,6 +88,12 @@ ALTER TABLE cards
 
 ALTER TABLE bicycles
     ADD CONSTRAINT fk_bicycles_users FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE bicycles
+    ADD CONSTRAINT fk_bicycles_temperatures FOREIGN KEY (temperature_id) REFERENCES temperatures(id);
+
+ALTER TABLE bicycles
+    ADD CONSTRAINT uk_bicycles_temperature UNIQUE (temperature_id);
 
 ALTER TABLE availabilities
     ADD CONSTRAINT fk_availabilities_bicycles FOREIGN KEY (bicycle_id) REFERENCES bicycles(id);

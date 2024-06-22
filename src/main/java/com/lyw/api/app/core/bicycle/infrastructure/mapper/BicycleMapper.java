@@ -3,7 +3,9 @@ package com.lyw.api.app.core.bicycle.infrastructure.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.Named;
 
+import com.lyw.api.app.assets.domain.model.Temperature;
 import com.lyw.api.app.core.bicycle.domain.model.Bicycle;
 import com.lyw.api.app.core.bicycle.infrastructure.dto.BicycleResponseDto;
 
@@ -17,9 +19,15 @@ public interface BicycleMapper {
             @Mapping(target = "bicyclePrice", source = "bicyclePrice"),
             @Mapping(target = "bicycleSize", source = "bicycleSize"),
             @Mapping(target = "bicycleModel", source = "bicycleModel"),
-            @Mapping(target = "imageData", source = "imageData")
+            @Mapping(target = "imageData", source = "imageData"),
+            @Mapping(target = "temperature", source = "temperature", qualifiedByName = "mapTemperature")
     })
     BicycleResponseDto toResponseDto(Bicycle card);
 
     List<BicycleResponseDto> toResponseDto(List<Bicycle> cards);
+
+    @Named("mapTemperature")
+    default double mapTemperature(Temperature temperature) {
+        return temperature.getTemperature();
+    }
 }

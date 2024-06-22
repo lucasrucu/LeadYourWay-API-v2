@@ -1,5 +1,6 @@
 package com.lyw.api.app.core.bicycle.domain.model;
 
+import com.lyw.api.app.assets.domain.model.Temperature;
 import com.lyw.api.app.iam.identity.domain.model.User;
 import com.lyw.api.app.shared.model.AuditModel;
 
@@ -42,4 +43,8 @@ public class Bicycle extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "temperature_id")
+    private Temperature temperature;
 }
