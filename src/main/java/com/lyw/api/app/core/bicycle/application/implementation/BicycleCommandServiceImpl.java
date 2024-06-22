@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.lyw.api.app.assets.application.services.TemperatureCommandService;
 import com.lyw.api.app.assets.domain.commands.CreateTemperatureCommand;
+import com.lyw.api.app.assets.domain.commands.PatchTemperatureCommand;
 import com.lyw.api.app.assets.domain.model.Temperature;
 import com.lyw.api.app.core.bicycle.application.services.BicycleCommandService;
 import com.lyw.api.app.core.bicycle.domain.commands.CreateBicycleCommand;
@@ -53,11 +54,10 @@ public class BicycleCommandServiceImpl implements BicycleCommandService {
 
     @Override
     public Temperature handle(PatchBicycleTemperatureCommand command) {
-        Bicycle bicycle = validationUtil.findBicycleById(command.bicycleId());
-        Temperature temperature = new Temperature();
-        temperature.setTemperature(command.temperature());
-        bicycle.setTemperature(temperature);
-        return temperature;
+        Bicycle bicycle = validationUtil.findBicycleById(command.temperatureRequestDto().getBicycleId());
+        return temperatureService
+                .handle(new PatchTemperatureCommand(command.temperatureRequestDto().getTemperature(),
+                        bicycle.getTemperature().getId()));
     }
 
     private Bicycle setBicycle(Bicycle bicycle, BicycleRequestDto bicycleRequestDto) {
