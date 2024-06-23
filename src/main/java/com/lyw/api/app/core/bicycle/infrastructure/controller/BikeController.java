@@ -102,10 +102,10 @@ public class BikeController {
     }
 
     @Transactional
-    @PatchMapping("/velocity/{bicycleId}")
+    @PutMapping("/velocity/{bicycleId}")
     @Operation(summary = "Update a bicycle velocity")
     public ResponseEntity<String> patchBicycleVelocity(@PathVariable(name = "bicycleId") Long bicycleId,
-                                                       @RequestBody VelocityRequestDto velocityRequestDto){
+            @RequestBody VelocityRequestDto velocityRequestDto){
         bicycleCommandService.handle(new PatchBicycleVelocityCommand(velocityRequestDto));
         return ResponseEntity.ok("Bicycle velocity updated successfully");
     }
