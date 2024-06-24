@@ -44,7 +44,7 @@ public class Bicycle extends AuditModel {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "temperature_id")
     private Temperature temperature;
 }
