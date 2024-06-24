@@ -35,7 +35,7 @@ public class User implements Serializable {
     @Column(name = "google_photo_url")
     private String googlePhotoUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id")
     private Role role;
 

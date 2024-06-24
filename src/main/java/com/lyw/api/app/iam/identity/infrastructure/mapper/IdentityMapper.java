@@ -10,6 +10,8 @@ import org.mapstruct.Named;
 import com.lyw.api.app.assets.domain.model.Temperature;
 import com.lyw.api.app.core.bicycle.domain.model.Bicycle;
 import com.lyw.api.app.core.bicycle.infrastructure.dto.BicycleResponseDto;
+import com.lyw.api.app.core.card.domain.model.Card;
+import com.lyw.api.app.core.card.infrastructure.dto.CardResponseDto;
 import com.lyw.api.app.iam.identity.domain.model.User;
 import com.lyw.api.app.iam.identity.infrastructure.dto.UserProfileResponseDto;
 import com.lyw.api.app.iam.identity.infrastructure.dto.UserResponseDto;
@@ -28,7 +30,7 @@ public interface IdentityMapper {
             @Mapping(target = "email", source = "entity.email"),
             @Mapping(target = "photoUrl", source = "entity.googlePhotoUrl"),
             @Mapping(target = "bicycles", source = "entity.bicycles", qualifiedByName = "mapBicycles"),
-            @Mapping(target = "cards", source = "entity.cards"),
+            @Mapping(target = "cards", source = "entity.cards", qualifiedByName = "mapCards"),
     })
     UserProfileResponseDto userToProfileResponseDto(User entity);
 
@@ -54,6 +56,28 @@ public interface IdentityMapper {
                     dto.setBicycleModel(bicycle.getBicycleModel());
                     dto.setImageData(bicycle.getImageData());
                     dto.setTemperature(mapTemperature(bicycle.getTemperature()));
+                    return dto;
+                })
+                .toList();
+    }
+
+    @Named("mapCards")
+    default List<CardResponseDto> mapCards(List<Card> cards) {
+        if (cards == null) {
+            return null;
+        }
+
+        return cards.stream()
+                .map(card -> {
+                    CardResponseDto dto = new CardResponseDto();
+                    dto.setCardId(card.getId());
+                    dto.setCardNumber(card.getCardNumber());
+                    dto.setCardType(card.getCardType());
+                    dto.setCardCvv(card.getCardCvv());
+                    dto.setCardExpirationDate(card.getCardExpirationDate());
+                    dto.setCardAmount(card.getCardAmount());
+                    dto.setCardHolder(card.getCardHolder());
+                    dto.setCardMain(card.getCardMain());
                     return dto;
                 })
                 .toList();
