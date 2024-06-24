@@ -49,6 +49,16 @@ CREATE TABLE velocities (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE gpses (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    created_date DATETIME(6) NOT NULL,
+    deleted BIT,
+    updated_date DATETIME(6),
+    latitude float(53) NOT NULL,
+    longitude float(53) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE bicycles (
     id BIGINT NOT NULL AUTO_INCREMENT,
     created_date DATETIME(6) NOT NULL,
@@ -63,6 +73,7 @@ CREATE TABLE bicycles (
     user_id VARCHAR(255),
     temperature_id BIGINT,
     velocity_id BIGINT,
+    gps_id BIGINT,
     PRIMARY KEY (id)
 );
 
@@ -110,6 +121,12 @@ ALTER TABLE bicycles
 
 ALTER TABLE bicycles
     ADD CONSTRAINT uk_bicycles_velocity UNIQUE (velocity_id);
+
+ALTER TABLE bicycles
+    ADD CONSTRAINT fk_bicycles_gpses FOREIGN KEY (gps_id) REFERENCES gpses(id);
+
+ALTER TABLE bicycles
+    ADD CONSTRAINT uk_bicycles_gps UNIQUE (gps_id);
 
 ALTER TABLE availabilities
     ADD CONSTRAINT fk_availabilities_bicycles FOREIGN KEY (bicycle_id) REFERENCES bicycles(id);

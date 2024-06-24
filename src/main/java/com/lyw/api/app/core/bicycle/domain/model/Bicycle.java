@@ -1,5 +1,6 @@
 package com.lyw.api.app.core.bicycle.domain.model;
 
+import com.lyw.api.app.assets.domain.model.Gps;
 import com.lyw.api.app.assets.domain.model.Temperature;
 import com.lyw.api.app.assets.domain.model.Velocity;
 import com.lyw.api.app.iam.identity.domain.model.User;
@@ -49,7 +50,11 @@ public class Bicycle extends AuditModel {
     @JoinColumn(name = "temperature_id")
     private Temperature temperature;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "velocity_id")
     private Velocity velocity;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "gps_id")
+    private Gps gps;
 }

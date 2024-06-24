@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import com.lyw.api.app.assets.infrastructure.dto.GpsRequestDto;
 import com.lyw.api.app.assets.infrastructure.dto.TemperatureRequestDto;
 import com.lyw.api.app.core.bicycle.application.services.BicycleCommandService;
 import com.lyw.api.app.core.bicycle.application.services.BicycleQueryService;
@@ -108,5 +109,14 @@ public class BikeController {
             @RequestBody VelocityRequestDto velocityRequestDto){
         bicycleCommandService.handle(new PatchBicycleVelocityCommand(velocityRequestDto));
         return ResponseEntity.ok("Bicycle velocity updated successfully");
+    }
+
+    @Transactional
+    @PutMapping("/gps/{bicycleId}")
+    @Operation(summary = "Update a bicycle gps data")
+    public ResponseEntity<String> patchBicycleGps(@PathVariable(name = "bicycleId") Long bicycleId,
+            @RequestBody GpsRequestDto gpsRequestDto){
+        bicycleCommandService.handle(new PatchBicycleGpsCommand(gpsRequestDto));
+        return ResponseEntity.ok("Bicycle gps updated successfully");
     }
 }
