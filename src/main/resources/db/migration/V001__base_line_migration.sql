@@ -40,6 +40,15 @@ CREATE TABLE temperatures (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE velocities (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    created_date DATETIME(6) NOT NULL,
+    deleted BIT,
+    updated_date DATETIME(6),
+    velocity float(53) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE bicycles (
     id BIGINT NOT NULL AUTO_INCREMENT,
     created_date DATETIME(6) NOT NULL,
@@ -53,6 +62,7 @@ CREATE TABLE bicycles (
     image_data VARCHAR(255),
     user_id VARCHAR(255),
     temperature_id BIGINT,
+    velocity_id BIGINT,
     PRIMARY KEY (id)
 );
 
@@ -94,6 +104,12 @@ ALTER TABLE bicycles
 
 ALTER TABLE bicycles
     ADD CONSTRAINT uk_bicycles_temperature UNIQUE (temperature_id);
+
+ALTER TABLE bicycles
+    ADD CONSTRAINT fk_bicycles_velocities FOREIGN KEY (velocity_id) REFERENCES velocities(id);
+
+ALTER TABLE bicycles
+    ADD CONSTRAINT uk_bicycles_velocity UNIQUE (velocity_id);
 
 ALTER TABLE availabilities
     ADD CONSTRAINT fk_availabilities_bicycles FOREIGN KEY (bicycle_id) REFERENCES bicycles(id);

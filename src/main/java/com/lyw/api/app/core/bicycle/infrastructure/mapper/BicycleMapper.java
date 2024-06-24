@@ -6,6 +6,7 @@ import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 
 import com.lyw.api.app.assets.domain.model.Temperature;
+import com.lyw.api.app.assets.domain.model.Velocity;
 import com.lyw.api.app.core.bicycle.domain.model.Bicycle;
 import com.lyw.api.app.core.bicycle.infrastructure.dto.BicycleResponseDto;
 
@@ -20,7 +21,9 @@ public interface BicycleMapper {
             @Mapping(target = "bicycleSize", source = "bicycleSize"),
             @Mapping(target = "bicycleModel", source = "bicycleModel"),
             @Mapping(target = "imageData", source = "imageData"),
-            @Mapping(target = "temperature", source = "temperature", qualifiedByName = "mapTemperature")
+            @Mapping(target = "temperature", source = "temperature", qualifiedByName = "mapTemperature"),
+            @Mapping(target = "velocity", source = "velocity", qualifiedByName = "mapVelocity"),
+
     })
     BicycleResponseDto toResponseDto(Bicycle card);
 
@@ -29,5 +32,10 @@ public interface BicycleMapper {
     @Named("mapTemperature")
     default double mapTemperature(Temperature temperature) {
         return temperature.getTemperature();
+    }
+
+    @Named("mapVelocity")
+    default double mapVelocity(Velocity velocity) {
+        return velocity.getVelocity();
     }
 }

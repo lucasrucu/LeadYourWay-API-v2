@@ -3,27 +3,16 @@ package com.lyw.api.app.core.bicycle.infrastructure.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.lyw.api.app.assets.infrastructure.dto.VelocityRequestDto;
+import com.lyw.api.app.core.bicycle.domain.commands.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.lyw.api.app.assets.infrastructure.dto.TemperatureRequestDto;
 import com.lyw.api.app.core.bicycle.application.services.BicycleCommandService;
 import com.lyw.api.app.core.bicycle.application.services.BicycleQueryService;
-import com.lyw.api.app.core.bicycle.domain.commands.CreateBicycleCommand;
-import com.lyw.api.app.core.bicycle.domain.commands.DeleteBicycleCommand;
-import com.lyw.api.app.core.bicycle.domain.commands.PatchBicycleTemperatureCommand;
-import com.lyw.api.app.core.bicycle.domain.commands.UpdateBicycleCommand;
 import com.lyw.api.app.core.bicycle.domain.queries.GetAvailableBicyclesQuery;
 import com.lyw.api.app.core.bicycle.domain.queries.GetBicycleByIdQuery;
 import com.lyw.api.app.core.bicycle.domain.queries.GetBicyclesQuery;
@@ -110,5 +99,14 @@ public class BikeController {
             @RequestBody TemperatureRequestDto temperatureRequestDto) {
         bicycleCommandService.handle(new PatchBicycleTemperatureCommand(temperatureRequestDto));
         return ResponseEntity.ok("Bicycle temperature updated successfully");
+    }
+
+    @Transactional
+    @PutMapping("/velocity/{bicycleId}")
+    @Operation(summary = "Update a bicycle velocity")
+    public ResponseEntity<String> patchBicycleVelocity(@PathVariable(name = "bicycleId") Long bicycleId,
+            @RequestBody VelocityRequestDto velocityRequestDto){
+        bicycleCommandService.handle(new PatchBicycleVelocityCommand(velocityRequestDto));
+        return ResponseEntity.ok("Bicycle velocity updated successfully");
     }
 }
