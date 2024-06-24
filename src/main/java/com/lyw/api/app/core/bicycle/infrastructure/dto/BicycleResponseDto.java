@@ -26,4 +26,8 @@ public class BicycleResponseDto {
     private double temperature;
     @Schema(description = "Velocity")
     private double velocity;
+    @Schema(description = "Latitude")
+    private double latitude;
+    @Schema(description = "Longitude")
+    private double longitude;
 }

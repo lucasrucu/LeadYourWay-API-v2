@@ -4,7 +4,9 @@ import com.lyw.api.app.assets.domain.model.Velocity;
 import com.lyw.api.app.assets.domain.repositories.VelocityRepository;
 import org.springframework.stereotype.Component;
 
+import com.lyw.api.app.assets.domain.model.Gps;
 import com.lyw.api.app.assets.domain.model.Temperature;
+import com.lyw.api.app.assets.domain.repositories.GpsRepository;
 import com.lyw.api.app.assets.domain.repositories.TemperatureRepository;
 import com.lyw.api.app.core.bicycle.domain.model.Availability;
 import com.lyw.api.app.core.bicycle.domain.model.Bicycle;
@@ -34,6 +36,7 @@ public class ValidationUtil {
     private final RentRepository rentRepository;
     private final TemperatureRepository temperatureRepository;
     private final VelocityRepository velocityRepository;
+    private final GpsRepository gpsRepository;
 
     public ValidationUtil(
             UserRepository userRepository,
@@ -42,7 +45,9 @@ public class ValidationUtil {
             BicycleRepository bicycleRepository,
             AvailabilityRepository availabilityRepository,
             RentRepository rentRepository,
-            TemperatureRepository temperatureRepository, VelocityRepository velocityRepository) {
+            TemperatureRepository temperatureRepository, 
+            VelocityRepository velocityRepository,
+            GpsRepository gpsRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.cardRepository = cardRepository;
@@ -51,6 +56,7 @@ public class ValidationUtil {
         this.rentRepository = rentRepository;
         this.temperatureRepository = temperatureRepository;
         this.velocityRepository = velocityRepository;
+        this.gpsRepository = gpsRepository;
     }
 
     public User findUserById(String id) {
@@ -96,6 +102,11 @@ public class ValidationUtil {
     public Velocity findVelocityById(Long id){
         return velocityRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Velocity not found with id: " + id));
+    }
+
+    public Gps findGpsById(Long id){
+        return gpsRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Gps not found with id: " + id));
     }
 
 }
