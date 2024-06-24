@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 
+import com.lyw.api.app.assets.domain.model.Gps;
 import com.lyw.api.app.assets.domain.model.Temperature;
 import com.lyw.api.app.assets.domain.model.Velocity;
 import com.lyw.api.app.core.bicycle.domain.model.Bicycle;
@@ -23,6 +24,8 @@ public interface BicycleMapper {
             @Mapping(target = "imageData", source = "imageData"),
             @Mapping(target = "temperature", source = "temperature", qualifiedByName = "mapTemperature"),
             @Mapping(target = "velocity", source = "velocity", qualifiedByName = "mapVelocity"),
+            @Mapping(target = "latitude", source = "gps", qualifiedByName = "mapGpsLatitude"),
+            @Mapping(target = "longitude", source = "gps", qualifiedByName = "mapGpsLongitude")
 
     })
     BicycleResponseDto toResponseDto(Bicycle card);
@@ -37,5 +40,13 @@ public interface BicycleMapper {
     @Named("mapVelocity")
     default double mapVelocity(Velocity velocity) {
         return velocity.getVelocity();
+    }
+    @Named("mapGpsLatitude")
+    default double mapGpsLatitude(Gps gps) {
+        return gps.getLatitude();
+    }
+    @Named("mapGpsLongitude")
+    default double mapGpsLongitude(Gps gps) {
+        return gps.getLongitude();
     }
 }
