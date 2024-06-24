@@ -13,6 +13,7 @@ import com.lyw.api.app.iam.identity.application.services.UserCommandService;
 import com.lyw.api.app.iam.identity.application.services.UserQueryService;
 import com.lyw.api.app.iam.identity.domain.model.User;
 import com.lyw.api.app.iam.identity.domain.queries.GetUserByIdQuery;
+import com.lyw.api.app.iam.identity.infrastructure.dto.UserProfileResponseDto;
 import com.lyw.api.app.iam.identity.infrastructure.dto.UserRequestDto;
 import com.lyw.api.app.iam.identity.infrastructure.dto.UserResponseDto;
 import com.lyw.api.app.iam.identity.infrastructure.mapper.IdentityMapper;
@@ -23,7 +24,7 @@ import com.lyw.api.app.shared.constants.HeaderConstants;
 import static com.lyw.api.app.shared.constants.ConfigurationMessages.USER_CREATED;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/leadyourway/v1/users")
 @Tag(name = "User Controller")
 @CrossOrigin
 public class UserController {
@@ -40,10 +41,18 @@ public class UserController {
         this.identityMapper = identityMapper;
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get user", description = "Allows to retrieve a user.")
+    public UserProfileResponseDto getUser(@Parameter @PathVariable("id") String id) {
+        User user = userQueryService.handle(new GetUserByIdQuery(id));
+        return identityMapper.userToProfileResponseDto(user);
+    }
+
     @GetMapping("/login/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get user", description = "Allows to retrieve a user.")
-    public UserResponseDto getUser(@Parameter @PathVariable("id") String id) {
+    public UserResponseDto loginUser(@Parameter @PathVariable("id") String id) {
         User user = userQueryService.handle(new GetUserByIdQuery(id));
         return identityMapper.userToResponseDto(user);
     }

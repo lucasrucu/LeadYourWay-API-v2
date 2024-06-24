@@ -1,6 +1,5 @@
 package com.lyw.api.app.iam.identity.application.implementation;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import com.lyw.api.app.iam.identity.application.services.UserCommandService;
@@ -27,7 +26,6 @@ public class UserCommandServiceImpl implements UserCommandService {
     public User handle(RegisterUserBikerCommand registerUserCommand) {
         User user = new User();
         Role role = validationUtil.getBikerRole();
-
         return getUser(user, role, registerUserCommand.userRequestDto());
     }
 
@@ -35,7 +33,6 @@ public class UserCommandServiceImpl implements UserCommandService {
     public User handle(RegisterUserRenterCommand registerUserCommand) {
         User user = new User();
         Role role = validationUtil.getRenterRole();
-
         return getUser(user, role, registerUserCommand.userRequestDto());
     }
 
@@ -45,12 +42,10 @@ public class UserCommandServiceImpl implements UserCommandService {
         if (userRequestDto.getName() != null) {
             user.setGoogleName(userRequestDto.getName());
         }
-        user.setGoogleName(RandomStringUtils.randomAlphabetic(10) + userRequestDto.getEmail());
         if (userRequestDto.getPhotoUrl() != null) {
             user.setGooglePhotoUrl(userRequestDto.getPhotoUrl());
         }
         user.setRole(role);
-
         userRepository.save(user);
         return user;
     }
