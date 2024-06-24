@@ -8,6 +8,7 @@ import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 
 import com.lyw.api.app.assets.domain.model.Temperature;
+import com.lyw.api.app.assets.domain.model.Velocity;
 import com.lyw.api.app.core.bicycle.domain.model.Bicycle;
 import com.lyw.api.app.core.bicycle.infrastructure.dto.BicycleResponseDto;
 import com.lyw.api.app.core.card.domain.model.Card;
@@ -34,9 +35,12 @@ public interface IdentityMapper {
     })
     UserProfileResponseDto userToProfileResponseDto(User entity);
 
-    @Named("mapTemperature")
     default double mapTemperature(Temperature temperature) {
         return temperature.getTemperature();
+    }
+
+    default double mapVelocity(Velocity velocity) {
+        return velocity.getVelocity();
     }
 
     @Named("mapBicycles")
@@ -56,6 +60,7 @@ public interface IdentityMapper {
                     dto.setBicycleModel(bicycle.getBicycleModel());
                     dto.setImageData(bicycle.getImageData());
                     dto.setTemperature(mapTemperature(bicycle.getTemperature()));
+                    dto.setVelocity(mapVelocity(bicycle.getVelocity()));
                     return dto;
                 })
                 .toList();
