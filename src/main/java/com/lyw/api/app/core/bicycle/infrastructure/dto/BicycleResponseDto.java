@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 @Schema(description = "Bicycle (Response)")
 public class BicycleResponseDto {
+    @Schema(description = "Bicycle ID")
+    private Long id;
     @Schema(description = "Bicycle Name")
     private String bicycleName;
     @Schema(description = "Bicycle Description")
